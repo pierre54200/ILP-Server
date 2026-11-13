@@ -1,0 +1,21 @@
+pre-commit:
+  parallel: true
+  commands:
+    branch: # Check that the current branch is not protected
+      run: sh .lefthook/pre-commit/branch.sh
+
+    files: # Check that staged files follow the rules
+      run: sh .lefthook/pre-commit/files.sh {staged_files}
+
+    conflict: # Check that there are no merge conflicts in staged files
+      run: sh .lefthook/pre-commit/conflict.sh {staged_files}
+
+commit-msg:
+  commands:
+    commit: # Check commit message format
+      run: sh .lefthook/commit-msg/commit.sh {1}
+
+pre-push:
+  commands:
+    build: # Check that the project builds successfully before pushing
+      run: sh .lefthook/pre-push/build.sh
